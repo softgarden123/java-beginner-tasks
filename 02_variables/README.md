@@ -8,6 +8,6 @@
 - `ProfileHandler.java` の `createProfile()` メソッド内だけを編集してください
 
 ## 実行方法
-1. IntelliJでこのフォルダを開く
+1. IDE(IntelliJやEclipse)でこのフォルダを開く
 2. `ProfileViewer.java` を右クリック → Run
 3. 入力欄に値を入れて「表示する」ボタンを押すと、結果が表示されます
