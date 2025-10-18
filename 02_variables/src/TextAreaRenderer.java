@@ -12,15 +12,15 @@ public class TextAreaRenderer implements OutputRenderer {
 
         StringBuilder sb = new StringBuilder();
         sb.append("こんにちは")
-                .append(profile.name)
+                .append(profile.getName())
                 .append("さん（")
-                .append(profile.age)
+                .append(profile.getAge())
                 .append("歳、身長")
-                .append(profile.height)
+                .append(profile.getHeight())
                 .append("cm）。学生：")
-                .append(profile.isStudent)
+                .append(profile.isMale() ? "男性" : "女性")
                 .append("、評価：")
-                .append(profile.grade);
+                .append(profile.getGrade());
         area.setText(sb.toString());
     }
 }

@@ -11,8 +11,9 @@ public class ProfileViewer {
         JTextField nameField = new JTextField(15);
         JTextField ageField = new JTextField(5);
         JTextField heightField = new JTextField(5);
-        JTextField studentField = new JTextField(5); // true / false
         JTextField gradeField = new JTextField(2);   // A〜F
+        String[] sexOptions = {"true", "false"};
+        JComboBox<String> sexField = new JComboBox<>(sexOptions);    // 男性 / 女性
 
         JButton showButton = new JButton("表示する");
         JTextArea resultArea = new JTextArea();
@@ -21,7 +22,7 @@ public class ProfileViewer {
 
         // イベント処理を別クラスに委譲
         showButton.addActionListener(e -> {
-            ProfileHandler profileHandler = new ProfileHandler(nameField, ageField, heightField, studentField, gradeField);
+            ProfileHandler profileHandler = new ProfileHandler(nameField, ageField, heightField, gradeField, sexField);
             Profile profile = profileHandler.createProfile();
             TextAreaRenderer renderer = new TextAreaRenderer();
             renderer.render(profile, resultArea);
@@ -35,10 +36,11 @@ public class ProfileViewer {
         inputPanel.add(ageField);
         inputPanel.add(new JLabel("身長(cm):"));
         inputPanel.add(heightField);
-        inputPanel.add(new JLabel("学生ですか？（true/false）:"));
-        inputPanel.add(studentField);
         inputPanel.add(new JLabel("評価（A〜F）:"));
         inputPanel.add(gradeField);
+        inputPanel.add(new JLabel("男性ですか？:"));
+        inputPanel.add(sexField);
+
         inputPanel.add(showButton);
 
         // フレームに追加
