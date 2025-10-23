@@ -10,6 +10,15 @@ public class AgeHandler {
         // 13歳以上20歳未満: TEENAGER
         // 20歳以上65歳未満: ADULT
         // 65歳以上: SENIOR
+        if (age < 13) {
+            return CHILD;
+        } else if (age < 20) {
+            return TEENAGER;
+        } else if (age < 65) {
+            return ADULT;
+        } else {
+            return SENIOR;
+        }
     }
 
 }
