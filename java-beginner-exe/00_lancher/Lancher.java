@@ -26,7 +26,7 @@ public class Lancher extends JFrame implements ActionListener {
         String path = e.getActionCommand();
 
         // 「はじめに」を別クラスで表示
-        if ("Readme".equals(Task.INTRO.getExePath())) {
+        if (path.equals(Task.INTRO.getExePath())) {
             ReadmeDialog.showReadme(this);
             return;
         }
