@@ -4,37 +4,17 @@ import java.awt.event.*;
 import java.io.File;
 
 public class Lancher extends JFrame implements ActionListener {
-    private String[] kadaiNames = {
-            "① Hello World",
-            "② 変数とデータ型",
-            "③ 条件分岐",
-            "④ 繰り返し処理",
-            "⑤ メソッドの定義と呼び出し",
-            "⑥ クラスとオブジェクト",
-            "⑦ コンストラクタとオーバーロード",
-            "⑧ 配列とArrayList"
-    };
-
-    private String[] exePaths = {
-            "../01_HelloWorld/HelloWorld.exe",
-            "../02_Variables/Variables.exe",
-            "../03_Conditions/Conditions.exe",
-            "../04_Loop/Loop.exe",
-            "../05_Calculator/Calculator.exe",
-            "../06_Objects/Objects.exe",
-            "../07_Constructor/Constructor.exe",
-            "../08_Arrays/Arrays.exe"
-    };
-
     public Lancher() {
         setTitle("Java課題ランチャー");
         setSize(400, 300);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new GridLayout(kadaiNames.length, 1));
+        Task[] tasks = Task.values();
+        int taskCount = tasks.length;
+        setLayout(new GridLayout(taskCount, 1));
 
-        for (int i = 0; i < kadaiNames.length; i++) {
-            JButton btn = new JButton(kadaiNames[i]);
-            btn.setActionCommand(exePaths[i]);
+        for (Task task : tasks) {
+            JButton btn = new JButton(task.getName());
+            btn.setActionCommand(task.getExePath());
             btn.addActionListener(this);
             add(btn);
         }
@@ -44,6 +24,13 @@ public class Lancher extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         String path = e.getActionCommand();
+
+        // 「はじめに」を別クラスで表示
+        if ("Readme".equals(Task.INTRO.getExePath())) {
+            ReadmeDialog.showReadme(this);
+            return;
+        }
+
         try {
             File exe = new File(path);
             if (exe.exists()) {
