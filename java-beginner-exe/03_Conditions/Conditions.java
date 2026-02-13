@@ -42,7 +42,19 @@ public class Conditions extends JFrame implements ActionListener {
                         "        // ※以下は変更しないこと\n" +
                         "        // --------------------------------\n" +
                         "        System.out.println(\"年齢: \" + age);\n" +
-                        "        System.out.println(\"判定: \" + result);\n" +
+                        "        System.out.println(\"判定: \" + result);\n\n" +
+
+                        "        // TODO: モードを表す変数 mode を int 型で宣言し、好きな値を入れてください\n" +
+                        "        int mode = 0;\n\n" +
+
+                        "        // --------------------------------\n" +
+                        "        // switch case を用いて以下の分岐を実装してください。\n" +
+                        "        // --------------------------------\n" +
+
+                        "        // ① mode が 0 なら「出生おめでとう！」\n" +
+                        "        // ② mode が 1 なら「成人おめでとう！」\n" +
+                        "        // ③ mode が 2 なら「就職おめでとう！」\n" +
+                        "        // ④ それ以外は「お疲れ様でした！」\n" +
                         "    }\n" +
                         "}";
 
