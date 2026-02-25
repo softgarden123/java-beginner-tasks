@@ -1,0 +1,113 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class Application extends JFrame {
+
+    private JTextArea humanArea;
+    private JTextArea mainArea;
+    private JTextArea outputArea;
+
+    public Application() {
+        setTitle("クラスとオブジェクト");
+        setSize(1100, 800);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        JPanel codePanel = new JPanel(new GridLayout(1, 2));
+
+        mainArea = new JTextArea(getDefaultMainCode());
+        humanArea = new JTextArea(getDefaultHumanCode());
+
+        codePanel.add(createScrollPanel("Main.java", mainArea));
+        codePanel.add(createScrollPanel("Human.java", humanArea));
+
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+
+        JButton runButton = new JButton("実行");
+        bottomPanel.add(runButton, BorderLayout.NORTH);
+
+        outputArea = new JTextArea();
+        outputArea.setEditable(false);
+        bottomPanel.add(new JScrollPane(outputArea), BorderLayout.CENTER);
+
+        // サイズ調整用に上下分割
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, codePanel, bottomPanel);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setContinuousLayout(true);
+        splitPane.setDividerLocation(0.7);
+        splitPane.setResizeWeight(0.7);
+
+        add(splitPane, BorderLayout.CENTER);
+
+        runButton.addActionListener(e -> runUserCode());
+    }
+
+    private JPanel createScrollPanel(String title, JTextArea area) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(new JLabel(title), BorderLayout.NORTH);
+        panel.add(new JScrollPane(area), BorderLayout.CENTER);
+        return panel;
+    }
+
+    private void runUserCode() {
+        outputArea.setText("");
+
+        String mainCode = mainArea.getText();
+        String humanCode = humanArea.getText();
+
+        UserCodeExecutor executor = new UserCodeExecutor();
+        executor.execute(mainCode, humanCode,  text -> {
+            outputArea.append(text + "\n");
+        });
+    }
+
+    public static void main(String[] args) {
+        System.out.println(System.getProperty("java.home"));
+
+        SwingUtilities.invokeLater(() -> {
+            new Application().setVisible(true);
+        });
+    }
+
+    private static String getDefaultHumanCode() {
+        return  "// 一人の年齢、名前の情報を持つクラス。\n" +
+                "\n" +
+                "public class Human {\n" +
+                "\n" +
+                "    private String name = \"\";\n" +
+                "    private int age = 0;\n" +
+                "    public Human() {}" +
+                "\n" +
+                "    // 名前を変更する setName(String name) メソッドを作成\n" +
+                "\n" +
+                "    // 年齢を変更する setAge(int age) メソッドを作成\n" +
+                "\n" +
+                "    // 年齢、名前を出力する showInfo() メソッドを作成\n" +
+                "}\n";
+
+    }
+
+    private static String getDefaultMainCode() {
+        return "// メイン処理\n" +
+                "// この課題では、Mainを変更する必要はありません。" +
+                "\n" +
+                "public class Main {\n" +
+                "    public static void main(String[] args) {\n" +
+                "\n" +
+                "        // Human のインスタンスを作成\n" +
+                "        Human human = new Human();\n" +
+                "\n" +
+                "        // 年齢と名前を出力(未設定のため、出力されない)\n" +
+                "        human.showInfo();\n" +
+                "\n" +
+                "        // 年齢と名前を設定\n" +
+                "        human.setName(\"Ito.h\");\n" +
+                "        human.setAge(25);\n" +
+                "\n" +
+                "        // 年齢と名前を出力(設定後のため、出力される)\n" +
+                "        human.showInfo();\n" +
+                "    }\n" +
+                "}\n";
+
+    }
+}
