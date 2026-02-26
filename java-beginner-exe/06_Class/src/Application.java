@@ -56,9 +56,12 @@ public class Application extends JFrame {
         String humanCode = humanArea.getText();
 
         UserCodeExecutor executor = new UserCodeExecutor();
-        executor.execute(mainCode, humanCode,  text -> {
-            outputArea.append(text + "\n");
-        });
+        // 実行はバックグラウンドスレッドで行い、出力は EDT で append する
+        new Thread(() -> {
+            executor.execute(mainCode, humanCode, text -> SwingUtilities.invokeLater(() -> {
+                outputArea.append(text + "\n");
+            }));
+        }, "UserCode-Runner").start();
     }
 
     public static void main(String[] args) {
