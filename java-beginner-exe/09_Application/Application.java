@@ -3,9 +3,9 @@ import java.awt.*;
 
 public class Application extends JFrame {
 
+    private JTextArea mainArea;
     private JTextArea itemArea;
     private JTextArea cartArea;
-    private JTextArea mainArea;
     private JTextArea outputArea;
 
     public Application() {
@@ -16,13 +16,22 @@ public class Application extends JFrame {
 
         JPanel codePanel = new JPanel(new GridLayout(1, 3));
 
+        mainArea = new JTextArea(getDefaultMainCode());
         itemArea = new JTextArea(getDefaultItemCode());
         cartArea = new JTextArea(getDefaultCartCode());
-        mainArea = new JTextArea(getDefaultMainCode());
 
+        // タブ幅をスペース4つ分に設定し、コード表示は等幅フォントにする
+        Font mono = new Font(Font.MONOSPACED, Font.PLAIN, 12);
+        mainArea.setFont(mono);
+        itemArea.setFont(mono);
+        cartArea.setFont(mono);
+        mainArea.setTabSize(4);
+        itemArea.setTabSize(4);
+        cartArea.setTabSize(4);
+
+        codePanel.add(createScrollPanel("Main.java", mainArea));
         codePanel.add(createScrollPanel("Item.java", itemArea));
         codePanel.add(createScrollPanel("Cart.java", cartArea));
-        codePanel.add(createScrollPanel("Main.java", mainArea));
 
         JPanel bottomPanel = new JPanel(new BorderLayout());
 
@@ -31,14 +40,18 @@ public class Application extends JFrame {
 
         outputArea = new JTextArea();
         outputArea.setEditable(false);
+        // 出力エリアもタブ幅を4にする（等幅にする必要があればコメントを外す）
+        outputArea.setTabSize(4);
+        // outputArea.setFont(mono);
         bottomPanel.add(new JScrollPane(outputArea), BorderLayout.CENTER);
 
         // サイズ調整用に上下分割
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, codePanel, bottomPanel);
         splitPane.setOneTouchExpandable(true);
         splitPane.setContinuousLayout(true);
-        splitPane.setDividerLocation(0.7);
-        splitPane.setResizeWeight(0.7);
+        // 下側（出力エリア）を少し広げるためにデフォルトの分割位置を 60% にする
+        splitPane.setDividerLocation(0.6);
+        splitPane.setResizeWeight(0.6);
 
         add(splitPane, BorderLayout.CENTER);
 
@@ -55,9 +68,9 @@ public class Application extends JFrame {
     private void runUserCode() {
         outputArea.setText("");
 
+        String mainCode = mainArea.getText();
         String itemCode = itemArea.getText();
         String cartCode = cartArea.getText();
-        String mainCode = mainArea.getText();
 
         UserCodeExecutor executor = new UserCodeExecutor();
         executor.execute(mainCode, itemCode, cartCode, text -> {
