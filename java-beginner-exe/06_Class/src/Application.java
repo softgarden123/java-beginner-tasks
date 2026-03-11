@@ -18,6 +18,13 @@ public class Application extends JFrame {
         mainArea = new JTextArea(getDefaultMainCode());
         humanArea = new JTextArea(getDefaultHumanCode());
 
+        // タブ幅をスペース4つ分に設定し、コード表示は等幅フォントにする
+        Font mono = new Font(Font.MONOSPACED, Font.PLAIN, 12);
+        mainArea.setFont(mono);
+        humanArea.setFont(mono);
+        mainArea.setTabSize(4);
+        humanArea.setTabSize(4);
+
         codePanel.add(createScrollPanel("Main.java", mainArea));
         codePanel.add(createScrollPanel("Human.java", humanArea));
 
@@ -28,6 +35,9 @@ public class Application extends JFrame {
 
         outputArea = new JTextArea();
         outputArea.setEditable(false);
+        // 出力エリアもタブ幅を4にする（等幅にする必要があればコメントを外す）
+        outputArea.setTabSize(4);
+        // outputArea.setFont(mono);
         bottomPanel.add(new JScrollPane(outputArea), BorderLayout.CENTER);
 
         // サイズ調整用に上下分割

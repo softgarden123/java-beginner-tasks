@@ -2,7 +2,6 @@ import java.util.ArrayList;
 public class UserCode {
     public static void main(String[] args) {
       // サイズが3の配列(String型)、fluteArrayを作成してください
-      String[] fluteArray = new String[3];
 
       fluteArray[0] = "リンゴ";
       fluteArray[1] = "ブドウ";
@@ -14,7 +13,6 @@ public class UserCode {
       System.out.println("配列のサイズは" + fluteArray.length + "です。");
 
       // ArrayList(String型)、nameListを作成してください。
-ArrayList<String> nameList = new ArrayList<>();
 
       // nameListに、任意の数の名前を入れてください。
       // addメソッドを使用することで、オブジェクトを追加することができます。

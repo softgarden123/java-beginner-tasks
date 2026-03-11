@@ -17,6 +17,12 @@ public class Application extends JFrame {
 
         mainArea = new JTextArea(getDefaultMainCode());
         humanArea = new JTextArea(getDefaultHumanCode());
+        // タブ幅をスペース4つ分に設定し、コード表示は等幅フォントにする
+        Font mono = new Font(Font.MONOSPACED, Font.PLAIN, 12);
+        mainArea.setFont(mono);
+        humanArea.setFont(mono);
+        mainArea.setTabSize(4);
+        humanArea.setTabSize(4);
 
         codePanel.add(createScrollPanel("Main.java", mainArea));
         codePanel.add(createScrollPanel("Human.java", humanArea));
@@ -28,6 +34,9 @@ public class Application extends JFrame {
 
         outputArea = new JTextArea();
         outputArea.setEditable(false);
+        // 出力エリアもタブ幅を4にする（等幅にする必要があればコメントを外す）
+        outputArea.setTabSize(4);
+        // outputArea.setFont(mono);
         bottomPanel.add(new JScrollPane(outputArea), BorderLayout.CENTER);
 
         // サイズ調整用に上下分割
@@ -56,9 +65,12 @@ public class Application extends JFrame {
         String humanCode = humanArea.getText();
 
         UserCodeExecutor executor = new UserCodeExecutor();
-        executor.execute(mainCode, humanCode,  text -> {
-            outputArea.append(text + "\n");
-        });
+        // 実行はバックグラウンドスレッドで行い、出力は EDT で append する
+        new Thread(() -> {
+            executor.execute(mainCode, humanCode, text -> SwingUtilities.invokeLater(() -> {
+                outputArea.append(text + "\n");
+            }));
+        }, "UserCode-Runner").start();
     }
 
     public static void main(String[] args) {
