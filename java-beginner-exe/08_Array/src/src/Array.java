@@ -53,12 +53,17 @@ public class Array extends JFrame implements ActionListener {
         // -----------------------------
         // GUI コンポーネント
         // -----------------------------
+        // タブ幅をスペース4つ分に設定し、コード表示は等幅フォントにする
+        Font mono = new Font(Font.MONOSPACED, Font.PLAIN, 12);
         codeArea = new JTextArea(template);
         outputArea = new JTextArea();
         errorArea = new JTextArea();
+        codeArea.setFont(mono);
+        codeArea.setTabSize(4);
 
         outputArea.setEditable(false);
         errorArea.setEditable(false);
+        outputArea.setTabSize(4);
 
         runButton = new JButton("コンパイルして実行");
         runButton.addActionListener(this);

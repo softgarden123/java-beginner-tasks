@@ -14,7 +14,7 @@ public class UserCode {
       System.out.println("配列のサイズは" + fluteArray.length + "です。");
 
       // ArrayList(String型)、nameListを作成してください。
-ArrayList<String> nameList = new ArrayList<>();
+      ArrayList<String> nameList = new ArrayList<>();
 
       // nameListに、任意の数の名前を入れてください。
       // addメソッドを使用することで、オブジェクトを追加することができます。
