@@ -20,35 +20,7 @@ public class Calculator extends JFrame implements ActionListener {
         // -----------------------------
         // 初期テンプレート（条件分岐）
         // -----------------------------
-        String template =
-                "public class UserCode {\n" +
-                        "    public static void main(String[] args) {\n" +
-                        "       // TODO: 「add」メソッドを呼び出して、結果をaddResultに入れてください\n" +
-                        "\n" +
-                        "       System.out.println(\\\"足し算の結果: \\\" + addResult);\\n\" +\n" +
-                        "\n" +
-                        "       // TODO: 「sub」メソッドを呼び出して、結果をsubResultに入れてください\n" +
-                        "\n" +
-                        "       System.out.println(\\\"引き算の結果: \\\" + subResult);\\n\" +\n" +
-                        "\n" +
-                        "       // TODO: 「multi」メソッドを呼び出して、結果をmultiResultに入れてください\n" +
-                        "\n" +
-                        "       System.out.println(\\\"掛け算の結果: \\\" + multiResult);\\n\" +\n" +
-                        "\n" +
-                        "       // TODO: 「division」メソッドを呼び出して、結果をdivisionResultに入れてください\n" +
-                        "\n" +
-                        "       System.out.println(\\\"割り算の結果: \\\" + divisionResult);\\n\" +\n" +
-                        "    }\n" +
-
-                        "   private static int add(int num1, int num2) {\n" +
-                        "       // TODO: num1 と num2 の足し算を行い、resultに設定して返却してください" +
-                        "       return result;\n" +
-                        "   }\n" +
-                        "\n" +
-                        "// TODO: 引数に整数型の値を2つ取り、引き算を行って返却する「sub」メソッドを作成してください\n" +
-                        "// TODO: 引数に整数型の値を2つ取り、掛け算を行って返却する「multi」メソッドを作成してください\n" +
-                        "// TODO: 引数に整数型の値を2つ取り、割り算を行って返却する「division」メソッドを作成してください\n" +
-                        "}";
+        String template = getTemplate();
 
         // -----------------------------
         // GUI コンポーネント
@@ -56,6 +28,10 @@ public class Calculator extends JFrame implements ActionListener {
         codeArea = new JTextArea(template);
         outputArea = new JTextArea();
         errorArea = new JTextArea();
+
+        Font mono = new Font(Font.MONOSPACED, Font.PLAIN, 12);
+        codeArea.setFont(mono);
+        codeArea.setTabSize(4);
 
         outputArea.setEditable(false);
         errorArea.setEditable(false);
@@ -67,13 +43,18 @@ public class Calculator extends JFrame implements ActionListener {
         JScrollPane outputScroll = new JScrollPane(outputArea);
         JScrollPane errorScroll = new JScrollPane(errorArea);
 
-        JSplitPane topBottom = new JSplitPane(JSplitPane.VERTICAL_SPLIT, codeScroll, outputScroll);
+        JPanel codePanel = new JPanel(new BorderLayout());
+        codePanel.add(codeScroll, BorderLayout.CENTER);
+        JPanel btnPanel = new JPanel(new BorderLayout());
+        btnPanel.add(runButton, BorderLayout.CENTER);
+        codePanel.add(btnPanel, BorderLayout.SOUTH);
+
+        JSplitPane topBottom = new JSplitPane(JSplitPane.VERTICAL_SPLIT, codePanel, outputScroll);
         topBottom.setDividerLocation(350);
 
         JSplitPane allSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topBottom, errorScroll);
         allSplit.setDividerLocation(550);
 
-        add(runButton, BorderLayout.NORTH);
         add(allSplit, BorderLayout.CENTER);
 
         setVisible(true);
@@ -121,6 +102,37 @@ public class Calculator extends JFrame implements ActionListener {
         } catch (Exception ex) {
             errorArea.setText("エラー: " + ex.getMessage());
         }
+    }
+
+    private String getTemplate() {
+        return "public class UserCode {\n" +
+                "    public static void main(String[] args) {\n" +
+                "       // TODO: 「add」メソッドを呼び出して、結果をaddResultに入れてください\n" +
+                "\n" +
+                "       System.out.println(\"足し算の結果: \" + addResult);\n" +
+                "\n" +
+                "       // TODO: 「sub」メソッドを呼び出して、結果をsubResultに入れてください\n" +
+                "\n" +
+                "       System.out.println(\"引き算の結果: \" + subResult);\n" +
+                "\n" +
+                "       // TODO: 「multi」メソッドを呼び出して、結果をmultiResultに入れてください\n" +
+                "\n" +
+                "       System.out.println(\"掛け算の結果: \" + multiResult);\n" +
+                "\n" +
+                "       // TODO: 「division」メソッドを呼び出して、結果をdivisionResultに入れてください\n" +
+                "\n" +
+                "       System.out.println(\"割り算の結果: \" + divisionResult);\n" +
+                "    }\n" +
+                "\n" +
+                "    private static int add(int num1, int num2) {\n" +
+                "       // TODO: num1 と num2 の足し算を行い、resultに設定して返却してください\n" +
+                "       return result;\n" +
+                "    }\n" +
+                "\n" +
+                "    // TODO: 引数に整数型の値を2つ取り、引き算を行って返却する「sub」メソッドを作成してください\n" +
+                "    // TODO: 引数に整数型の値を2つ取り、掛け算を行って返却する「multi」メソッドを作成してください\n" +
+                "    // TODO: 引数に整数型の値を2つ取り、割り算を行って返却する「division」メソッドを作成してください\n" +
+                "}";
     }
 
     public static void main(String[] args) {
