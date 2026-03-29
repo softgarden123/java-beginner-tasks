@@ -20,43 +20,7 @@ public class Conditions extends JFrame implements ActionListener {
         // -----------------------------
         // 初期テンプレート（条件分岐）
         // -----------------------------
-        String template =
-                "public class UserCode {\n" +
-                        "    public static void main(String[] args) {\n" +
-                        "        // TODO: 年齢を表す変数 age を int 型で宣言し、好きな値を入れてください\n" +
-                        "        int age = 20;\n\n" +
-
-                        "        String result;\n\n" +
-
-                        "        // --------------------------------\n" +
-                        "        // ifとelse ifを用いて以下の分岐を実装してください。\n" +
-                        "        // --------------------------------\n" +
-
-                        "        // ① age が 0 未満なら「不正な値です」\n" +
-                        "        // ② age が 20 未満なら「未成年です」\n" +
-                        "        // ③ age が 65 未満なら「成人です」\n" +
-                        "        // ④ それ以外は「高齢者です」\n" +
-
-                        "        // --------------------------------\n" +
-                        "        // 結果表示\n" +
-                        "        // ※以下は変更しないこと\n" +
-                        "        // --------------------------------\n" +
-                        "        System.out.println(\"年齢: \" + age);\n" +
-                        "        System.out.println(\"判定: \" + result);\n\n" +
-
-                        "        // TODO: モードを表す変数 mode を int 型で宣言し、好きな値を入れてください\n" +
-                        "        int mode = 0;\n\n" +
-
-                        "        // --------------------------------\n" +
-                        "        // switch case を用いて以下の分岐を実装してください。\n" +
-                        "        // --------------------------------\n" +
-
-                        "        // ① mode が 0 なら「出生おめでとう！」\n" +
-                        "        // ② mode が 1 なら「成人おめでとう！」\n" +
-                        "        // ③ mode が 2 なら「就職おめでとう！」\n" +
-                        "        // ④ それ以外は「お疲れ様でした！」\n" +
-                        "    }\n" +
-                        "}";
+        String template = getTemplate();
 
         // -----------------------------
         // GUI コンポーネント
@@ -64,6 +28,10 @@ public class Conditions extends JFrame implements ActionListener {
         codeArea = new JTextArea(template);
         outputArea = new JTextArea();
         errorArea = new JTextArea();
+
+        Font mono = new Font(Font.MONOSPACED, Font.PLAIN, 12);
+        codeArea.setFont(mono);
+        codeArea.setTabSize(4);
 
         outputArea.setEditable(false);
         errorArea.setEditable(false);
@@ -75,13 +43,22 @@ public class Conditions extends JFrame implements ActionListener {
         JScrollPane outputScroll = new JScrollPane(outputArea);
         JScrollPane errorScroll = new JScrollPane(errorArea);
 
-        JSplitPane topBottom = new JSplitPane(JSplitPane.VERTICAL_SPLIT, codeScroll, outputScroll);
+        // codeArea と runButton をまとめたパネルを作成し、runButton を codeArea の下に配置する
+        JPanel codePanel = new JPanel(new BorderLayout());
+        codePanel.add(codeScroll, BorderLayout.CENTER);
+        JPanel btnPanel = new JPanel(new BorderLayout());
+        // ボタンを CENTER に追加すると横幅いっぱいに広がります
+        btnPanel.add(runButton, BorderLayout.CENTER);
+        codePanel.add(btnPanel, BorderLayout.SOUTH);
+
+        JSplitPane topBottom = new JSplitPane(JSplitPane.VERTICAL_SPLIT, codePanel, outputScroll);
         topBottom.setDividerLocation(350);
 
         JSplitPane allSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topBottom, errorScroll);
         allSplit.setDividerLocation(550);
 
-        add(runButton, BorderLayout.NORTH);
+        //runButton は codePanel 内に配置したので、ここでは上部に追加しない
+        //add(runButton, BorderLayout.NORTH);
         add(allSplit, BorderLayout.CENTER);
 
         setVisible(true);
@@ -129,6 +106,45 @@ public class Conditions extends JFrame implements ActionListener {
         } catch (Exception ex) {
             errorArea.setText("エラー: " + ex.getMessage());
         }
+    }
+
+    private String getTemplate() {
+           return "public class UserCode {\n" +
+                    "    public static void main(String[] args) {\n" +
+                    "        // TODO: 年齢を表す変数 age を int 型で宣言し、好きな値を入れてください\n" +
+                    "        int age = 20;\n\n" +
+
+                    "        String result;\n\n" +
+
+                    "        // --------------------------------\n" +
+                    "        // ifとelse ifを用いて以下の分岐を実装してください。\n" +
+                    "        // --------------------------------\n" +
+
+                    "        // ① age が 0 未満なら「不正な値です」\n" +
+                    "        // ② age が 20 未満なら「未成年です」\n" +
+                    "        // ③ age が 65 未満なら「成人です」\n" +
+                    "        // ④ それ以外は「高齢者です」\n" +
+
+                    "        // --------------------------------\n" +
+                    "        // 結果表示\n" +
+                    "        // ※以下は変更しないこと\n" +
+                    "        // --------------------------------\n" +
+                    "        System.out.println(\"年齢: \" + age);\n" +
+                    "        System.out.println(\"判定: \" + result);\n\n" +
+
+                    "        // TODO: モードを表す変数 mode を int 型で宣言し、好きな値を入れてください\n" +
+                    "        int mode = 0;\n\n" +
+
+                    "        // --------------------------------\n" +
+                    "        // switch case を用いて以下の分岐を実装してください。\n" +
+                    "        // --------------------------------\n" +
+
+                    "        // ① mode が 0 なら「出生おめでとう！」\n" +
+                    "        // ② mode が 1 なら「成人おめでとう！」\n" +
+                    "        // ③ mode が 2 なら「就職おめでとう！」\n" +
+                    "        // ④ それ以外は「お疲れ様でした！」\n" +
+                    "    }\n" +
+                    "}";
     }
 
     public static void main(String[] args) {
