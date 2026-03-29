@@ -43,11 +43,9 @@ public class Conditions extends JFrame implements ActionListener {
         JScrollPane outputScroll = new JScrollPane(outputArea);
         JScrollPane errorScroll = new JScrollPane(errorArea);
 
-        // codeArea と runButton をまとめたパネルを作成し、runButton を codeArea の下に配置する
         JPanel codePanel = new JPanel(new BorderLayout());
         codePanel.add(codeScroll, BorderLayout.CENTER);
         JPanel btnPanel = new JPanel(new BorderLayout());
-        // ボタンを CENTER に追加すると横幅いっぱいに広がります
         btnPanel.add(runButton, BorderLayout.CENTER);
         codePanel.add(btnPanel, BorderLayout.SOUTH);
 
@@ -57,8 +55,6 @@ public class Conditions extends JFrame implements ActionListener {
         JSplitPane allSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topBottom, errorScroll);
         allSplit.setDividerLocation(550);
 
-        //runButton は codePanel 内に配置したので、ここでは上部に追加しない
-        //add(runButton, BorderLayout.NORTH);
         add(allSplit, BorderLayout.CENTER);
 
         setVisible(true);
