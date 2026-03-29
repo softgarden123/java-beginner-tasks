@@ -21,6 +21,10 @@ public class HelloWorld extends JFrame {
         setLayout(new BorderLayout(8, 8));
 
         inputArea.setText("");
+        Font mono = new Font(Font.MONOSPACED, Font.PLAIN, 12);
+        inputArea.setFont(mono);
+        inputArea.setTabSize(4);
+
         JScrollPane inScroll = new JScrollPane(inputArea);
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.add(new JLabel("System.out.println(...) を用いて文字列を出力してみよう"), BorderLayout.NORTH);
