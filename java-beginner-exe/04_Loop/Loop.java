@@ -20,23 +20,7 @@ public class Loop extends JFrame implements ActionListener {
         // -----------------------------
         // 初期テンプレート（繰り返し処理）
         // -----------------------------
-        String template =
-                "public class UserCode {\n" +
-                        "    public static void main(String[] args) {\n" +
-                        "        // TODO: 繰り返す回数を表す変数 count を int 型で宣言し、好きな値を入れてください\n" +
-                        "        int count = 5;\n\n" +
-
-                        "        // ------------------------------\n" +
-                        "        // for文を用いて1～countまで1ずつ繰り上げながら出力してください\n" +
-                        "        // ※出力はSystem.out.println()を利用してください\n" +
-                        "        // ------------------------------\n\n\n" +
-
-                        "        // ------------------------------\n" +
-                        "        // while文を用いて1～countまで1ずつ繰り上げながら出力してください\n" +
-                        "        // ※出力はSystem.out.println()を利用してください\n" +
-                        "        // ------------------------------\n\n\n" +
-                        "    }\n" +
-                        "}";
+        String template = getTemplate();
 
         // -----------------------------
         // GUI コンポーネント
@@ -44,6 +28,10 @@ public class Loop extends JFrame implements ActionListener {
         codeArea = new JTextArea(template);
         outputArea = new JTextArea();
         errorArea = new JTextArea();
+
+        Font mono = new Font(Font.MONOSPACED, Font.PLAIN, 12);
+        codeArea.setFont(mono);
+        codeArea.setTabSize(4);
 
         outputArea.setEditable(false);
         errorArea.setEditable(false);
@@ -55,13 +43,18 @@ public class Loop extends JFrame implements ActionListener {
         JScrollPane outputScroll = new JScrollPane(outputArea);
         JScrollPane errorScroll = new JScrollPane(errorArea);
 
-        JSplitPane topBottom = new JSplitPane(JSplitPane.VERTICAL_SPLIT, codeScroll, outputScroll);
+        JPanel codePanel = new JPanel(new BorderLayout());
+        codePanel.add(codeScroll, BorderLayout.CENTER);
+        JPanel btnPanel = new JPanel(new BorderLayout());
+        btnPanel.add(runButton, BorderLayout.CENTER);
+        codePanel.add(btnPanel, BorderLayout.SOUTH);
+
+        JSplitPane topBottom = new JSplitPane(JSplitPane.VERTICAL_SPLIT, codePanel, outputScroll);
         topBottom.setDividerLocation(350);
 
         JSplitPane allSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topBottom, errorScroll);
         allSplit.setDividerLocation(550);
 
-        add(runButton, BorderLayout.NORTH);
         add(allSplit, BorderLayout.CENTER);
 
         setVisible(true);
@@ -109,6 +102,25 @@ public class Loop extends JFrame implements ActionListener {
         } catch (Exception ex) {
             errorArea.setText("エラー: " + ex.getMessage());
         }
+    }
+
+    private String getTemplate() {
+        return "public class UserCode {\n" +
+                "    public static void main(String[] args) {\n" +
+                "        // TODO: 繰り返す回数を表す変数 count を int 型で宣言し、好きな値を入れてください\n" +
+                "        int count = 5;\n\n" +
+
+                "        // ------------------------------\n" +
+                "        // for文を用いて1～countまで1ずつ繰り上げながら出力してください\n" +
+                "        // ※出力はSystem.out.println()を利用してください\n" +
+                "        // ------------------------------\n\n\n" +
+
+                "        // ------------------------------\n" +
+                "        // while文を用いて1～countまで1ずつ繰り上げながら出力してください\n" +
+                "        // ※出力はSystem.out.println()を利用してください\n" +
+                "        // ------------------------------\n\n\n" +
+                "    }\n" +
+                "}";
     }
 
     public static void main(String[] args) {
