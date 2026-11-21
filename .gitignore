@@ -1,0 +1,23 @@
+# IDE metadata
+/.idea/
+**/.idea/
+*.iml
+
+# Java build output
+**/build/
+**/out/
+**/out_check/
+**/*.class
+
+# Launcher-local state
+/app/lib/
+/app/jre/
+/app/jre_m/
+/app/saved/
+/app/temp/
+/app/tmp.txt
+/app/src/sources.txt
+
+# Launcher artifacts
+/app/*.exe
+/app/*.jar
